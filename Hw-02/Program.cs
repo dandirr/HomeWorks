@@ -5,12 +5,7 @@ Console.WriteLine("Введите число");
 string readLineResult = Console.ReadLine();
 Console.WriteLine($"Пользователь ввел: {readLineResult}");
 //long myVar = long.Parse(readLineResult);
-bool success = long.TryParse(readLineResult, out long myVar);
-if (!success)
-{
-    Console.WriteLine("введено не число\n");
-    return;
-}
+
 
 
 Console.WriteLine("Нажмите соответствую цифру, если вы хотите проверить на возможность явного приведение:\n 1 - sbyte,\n 2 - short,\n 3 - int,\n 4 - long,\n 5 - byte,\n 6 - ushort,\n 7 - uint,\n 8 - ulong\n");
@@ -18,7 +13,7 @@ string type = Console.ReadLine();
 
 //long myType = long.Parse(type);
 
-success = ulong.TryParse(type, out ulong myType);
+bool success = ulong.TryParse(type, out ulong myType);
 if (!success)
 {
     Console.WriteLine("введено не число\n");
@@ -29,7 +24,30 @@ if (!success)
     return;
 }
 
+if (myType == 8)
+{
+    Console.WriteLine("Тип проверяемых данных ulong");
+    ulong myVar2;
+    bool suc = ulong.TryParse(readLineResult, out myVar2);
+    if (suc == true)
+    {
+        ulong result = (ulong)myVar2;
+        Console.WriteLine($"Переменная {myVar2} приводится без потери значения к переменной типа ulong {result}");
+    }
+    else
+    {
+        Console.WriteLine($"Для приведения числа {myVar2} к типу ulong число не может быть больше {ulong.MaxValue} и меньше {ulong.MinValue}. Приведение без потери значения невозможно");
+    }
+    return;
+}
 
+long myVar;
+success = long.TryParse(readLineResult, out myVar);
+if (!success)
+{
+    Console.WriteLine("введено не число\n");
+    return;
+}
 if (myType == 1)
 {
     Console.WriteLine("Проверка sbyte");
@@ -123,24 +141,6 @@ else if (myType == 7)
     {
         Console.WriteLine($"Для приведения числа {myVar} к типу uint число не может быть больше {uint.MaxValue} и меньше {uint.MinValue}. Приведение без потери значения невозможно");
     }
-}
-else if (myType == 8)
-{
-    Console.WriteLine("Тип проверяемых данных ulong");
-    ulong myVar2;
-    bool suc = ulong.TryParse(readLineResult, out myVar2);
-    if (success == true)
-    {
-        ulong result = (ulong)myVar2;
-        Console.WriteLine($"Переменная {myVar2} приводится без потери значения к переменной типа ulong {result}");
-    }
-    else
-    {
-        Console.WriteLine($"Для приведения числа {myVar2} к типу ulong число не может быть больше {ulong.MaxValue} и меньше {ulong.MinValue}. Приведение без потери значения невозможно");
-    }
-
-
-
 }
 
 
